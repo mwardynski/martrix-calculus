@@ -5,9 +5,9 @@ class MxGenerator {
   generateMx(k) {
     let mxSize = 2 ** k
     let mx = [];
-    for (var i = 0 ; i < mxSize; i++) {
+    for (let i = 0 ; i < mxSize; i++) {
       mx[i] = [];
-      for (var j = 0; j < mxSize; j++) {
+      for (let j = 0; j < mxSize; j++) {
         mx[i][j] = Math.floor(Math.random() * 2 * this.numRange - this.numRange)
       }
     }

@@ -1,12 +1,19 @@
-const MxGenerator = require("./mx_generator")
-const MxIO = require("./mx_io")
+const MxGenerator = require('./mx_generator')
+const MxIO = require('./mx_io')
+const MxMultiplier = require('./mx_multiplier')
 
 if (process.argv.length < 3) {
     console.error('neither k nor k-range specified')
     process.exit(1)
 } 
 
-if (process.argv.length === 'test') {
+let mxIO = new MxIO()
+let mxMultiplier = new MxMultiplier()
+if (process.argv[2] === 'test') {
+    A = mxIO.loadMx('input_mx1_8x8.json')
+    B = mxIO.loadMx('input_mx2_8x8.json')
+    AB = mxMultiplier.tradMultiply(A, B)
+    mxIO.storeMx(AB, 'result_8x8.json')
 
 } else {
     let kRange = readKRange(process.argv)
@@ -14,11 +21,6 @@ if (process.argv.length === 'test') {
     let mxGenerator = new MxGenerator(10)
     for (let k = kRange[0]; k <= kRange[1]; k++) {
         let mx = mxGenerator.generateMx(k)
-        console.log(mx)
-        let mxIO = new MxIO()
-        mxIO.storeMx(mx, 'input_mx2_8x8.json')
-        mxFromFile = mxIO.loadMx('input_mx2_8x8.json')
-        console.log(mxFromFile)
     }
 }
 
