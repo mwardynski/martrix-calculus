@@ -1,3 +1,4 @@
+const MxGenerator = require("./mx_generator")
 
 let kRange = []
 if (process.argv.length < 3) {
@@ -7,9 +8,10 @@ if (process.argv.length < 3) {
     kRange = readKRange(process.argv)
 }
 
+let mxGenerator = new MxGenerator(1000)
 for (let k = kRange[0]; k <= kRange[1]; k++) {
-    mxSize = 2 ** k
-    console.log("k="+k+", matrix size="+mxSize)
+    let mx = mxGenerator.generateMx(k)
+    console.log(mx)
 }
 
 function readKRange(args) {
