@@ -13,7 +13,9 @@ if (process.argv[2] === 'test') {
     A = mxIO.loadMx('input_mx1_8x8.json')
     B = mxIO.loadMx('input_mx2_8x8.json')
     AB = mxMultiplier.tradMultiply(A, B)
+    AB_rec = mxMultiplier.RecursiveMultiply(A,B)
     mxIO.storeMx(AB, 'result_8x8.json')
+    mxIO.storeMx(AB_rec, 'resultrec_8x8.json')
 
 } else {
     let kRange = readKRange(process.argv)
