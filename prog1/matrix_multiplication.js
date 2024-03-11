@@ -13,9 +13,11 @@ if (process.argv[2] === 'test') {
     A = mxIO.loadMx('input_mx1_16x16.json')
     B = mxIO.loadMx('input_mx2_16x16.json')
     AB = mxMultiplier.tradMultiply(A, B)
-    AB_rec = mxMultiplier.RecursiveMultiply(A,B)
+    AB_rec = mxMultiplier.recMult(A,B)
     mxIO.storeMx(AB, 'result_16x16.json')
+    console.log(AB_rec)
     mxIO.storeMx(AB_rec, 'resultrec_16x16.json')
+
 
 } else {
     let kRange = readKRange(process.argv)
@@ -23,7 +25,7 @@ if (process.argv[2] === 'test') {
     let mxGenerator = new MxGenerator(10)
     for (let k = kRange[0]; k <= kRange[1]; k++) {
         let mx = mxGenerator.generateMx(k)
-        mxIO.storeMx(mx, 'input_mx2_16x16.json')
+        mxIO.storeMx(mx, 'input_mx2_8x8.json')
     }
 }
 

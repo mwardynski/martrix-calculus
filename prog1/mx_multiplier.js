@@ -13,7 +13,7 @@ class MxMultiplier {
                 let sum = 0
                 for (let k in A[0]) {
                     let r = this.multiplyWithStats(A[i][k], B[k][j])
-                    sum = this.addWithStats(sum, r) 
+                    sum = this.addWithStats(sum, r)
                 }
                 AB[i][j] = sum
             }
@@ -21,29 +21,32 @@ class MxMultiplier {
         return AB
     }
 
-    RecursiveMultiply(A, B, rowA = A.length, colA = A[0].length, colB = B[0].length, i = 0, j = 0, k = 0, AB = []) {    
-        if (i >= rowA) 
-        return AB;
-        if (!AB[i]) AB[i] = [];
-        if (j < colB) {
-            if (k < colA) {
-                AB[i][j] = (AB[i][j] || 0) + A[i][k] * B[k][j];
-                return this.RecursiveMultiply(A, B, rowA, colA, colB, i, j, k + 1, AB);
-            }
-            return this.RecursiveMultiply(A, B,  rowA, colA, colB, i, j + 1, 0, AB);
+    recMult(A_arr, B_arr, C_res = [], AB_ind = 0) {
+        let a_len = A_arr.length
+        if (AB_ind >= a_len) {
+            return C_res;
         }
-        return this.RecursiveMultiply(A, B, rowA, colA, colB, i + 1, 0, 0, AB);
+        for (let B_inn_ind in B[0]) {
+            let sum = 0
+            if (!C_res[AB_ind]) C_res[AB_ind] = []
+            for (let A_inn_ind in A[0]) {
+                let r = this.multiplyWithStats(A[AB_ind][A_inn_ind], B[A_inn_ind][B_inn_ind])
+                sum = this.addWithStats(sum, r)
+            }
+            C_res[AB_ind][B_inn_ind] = sum
+        }
+        return this.recMult(A_arr, B_arr, C_res, AB_ind + 1)
     }
 
     addWithStats(a, b) {
         this.addNo++
-        return a+b
+        return a + b
     }
 
     multiplyWithStats(a, b) {
         this.mulNo++
-        return a*b
+        return a * b
     }
 }
- 
+
 module.exports = MxMultiplier
