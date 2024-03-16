@@ -1,110 +1,138 @@
-const { join } = require("path")
+const { join } = require("path");
 
 class MxMultiplier {
+  addNo = 0;
+  mulNo = 0;
 
-    addNo = 0
-    mulNo = 0
-
-    tradMultiply(A, B) {
-        let AB = []
-        for (let i in A) {
-            AB[i] = []
-            for (let j in B[0]) {
-                let sum = 0
-                for (let k in A[0]) {
-                    let r = this.multiplyWithStats(A[i][k], B[k][j])
-                    sum = this.addWithStats(sum, r)
-                }
-                AB[i][j] = sum
-            }
+  tradMultiply(A, B) {
+    let AB = [];
+    for (let i in A) {
+      AB[i] = [];
+      for (let j in B[0]) {
+        let sum = 0;
+        for (let k in A[0]) {
+          let r = this.multiplyWithStats(A[i][k], B[k][j]);
+          sum = this.addWithStats(sum, r);
         }
-        
-        return AB
-    }
-
-    multNumbers(matrix_one, matrix_two){ 
-        let calculateMatEl = (sub_A_el, sub_B_el) => { 
-            let first_el_mult = this.multiplyWithStats( Number(sub_A_el[0]),  Number(sub_B_el[0])); 
-            let sec_el_mult = this.multiplyWithStats( Number(sub_A_el[1]),  Number(sub_B_el[1])); 
-            return this.addWithStats(first_el_mult, sec_el_mult); 
-          }; 
-          let a = calculateMatEl( 
-            [matrix_one[0], matrix_one[1]], 
-            [matrix_two[0], matrix_two[2]] 
-          ); 
-          let b = calculateMatEl( 
-            [matrix_one[0], matrix_one[1]], 
-            [matrix_two[1], matrix_two[3]] 
-          ); 
-          let c = calculateMatEl( 
-            [matrix_one[2], matrix_one[3]], 
-            [matrix_two[0], matrix_two[2]] 
-          ); 
-          let d = calculateMatEl( 
-            [matrix_one[2], matrix_one[3]], 
-            [matrix_two[1], matrix_two[3]] 
-          ); 
-          return [ 
-            [a, b], 
-            [c, d], 
-          ]; 
+        AB[i][j] = sum;
       }
-
-      sumMatrixes(mat_A, mat_B){ 
-        let sum = [] 
-        mat_B = String(mat_B).split(",") 
-        for(let ind=0; ind<mat_A.length;ind++){ 
-            let sumNum = +Number(mat_A[ind]) + +Number(mat_B[ind]) 
-            sum[ind] = sumNum 
-        } 
-        return sum; 
     }
+    return AB;
+  }
 
-    recMult(A, B, counter=0, block_counter=0, sub_A = [],sub_B= [], res = [],result = [], copyMatr = []){
-        let copyOfMatrix = A.map(row => row.slice());
-        sub_A = this.subMatrix(A)
-        sub_B = this.subMatrix(B)
-        res = this.tradMultiply(sub_A, sub_B)
-        return res
-    } 
+  recMultiply(A, B, res = []) {
+    let sub_A = this.subMatrix(A);
+    let sub_B = this.subMatrix(B);
+    res = this.recMultMatrixes(sub_A, sub_B)
+    return this.recQuadComp(res).flat(1);
+  }
 
-
-    
-    subMatrix(matrix, length = matrix.length){
-        let blockSize = 2;
-        let copyOfMatrix = matrix.map(row => row.slice());
-        let subMatrix = [];
-        if(length === blockSize){            
-            return matrix;
+  recQuadComp(matr,last_ins_index = 0,processed_row = 0,res_row = []) {
+    if (processed_row >= matr.length) {
+        return res_row;
+      }
+      if(!res_row[processed_row]){
+        res_row[processed_row] = []
+      }
+    let inn_cell = 0;
+    for(let cell = 0; cell < matr[processed_row].length; cell++){
+        if(!res_row[processed_row][inn_cell]){
+            res_row[processed_row][inn_cell] = []
         }
-            for (let i = 0; i < matrix.length; i+=2 ){
-                for (let j = 0; j <= matrix[i].length; j++){   
-
-                let subArray1 = matrix[i].splice(0, copyOfMatrix[i].length / 2);
-                let subArray2 = matrix[i + 1].splice(0, copyOfMatrix[i].length / 2);
-                if( length === 4){
-                    subMatrix.push([...subArray1, ...subArray2])
-                } else{
-                    subMatrix.push(subArray1, subArray2)
-                    
-                }
-                
-                }
-            }
-            return this.subMatrix(matrix = subMatrix, length = length/2)
-        
+        if(res_row[processed_row][inn_cell].length >= matr[processed_row].length*2){
+            ++inn_cell
+            res_row[processed_row][inn_cell] = []
+        }
+        res_row[processed_row][inn_cell].push(matr[processed_row][cell][last_ins_index])
+        res_row[processed_row][inn_cell].push(matr[processed_row][cell][last_ins_index+1])
     }
 
+    if (last_ins_index < matr[0][0].length - 2) {
+        return this.recQuadComp(matr,last_ins_index + 2,processed_row,res_row);
+      }
+      return this.recQuadComp(matr,0,processed_row + 1,res_row);
+  }
 
-    addWithStats(a, b) {
-        this.addNo++
-        return a + b
+  recMultMatrixes(sub_A, sub_B, last_row = 0, res = []) {
+    if (last_row >= sub_A.length) {
+      return res;
     }
+    if (!res[last_row]) {
+      res[last_row] = [];
+    }
+    for (let col_ind = 0; col_ind < sub_A.length; col_ind++) {
+      let sum = [0, 0, 0, 0];
+      for (let col_inner = 0; col_inner < sub_A.length; col_inner++) {
+        let mat_A = sub_A[last_row][col_inner];
+        let mat_B = sub_B[col_inner][col_ind];
+        let multipleMatr = this.tradMultiply(this.divideToHalf([mat_A]), this.divideToHalf([mat_B]));
+        sum = this.sumMatrixes(sum, multipleMatr);
+      }
+      res[last_row].push(sum);
+    }
+    return this.recMultMatrixes(sub_A, sub_B, last_row + 1, res);
+  }
 
-    multiplyWithStats(a, b) {
-        this.mulNo++
-        return a * b
+  sumMatrixes(mat_A, mat_B) {
+    let sum = [];
+    mat_B = String(mat_B).split(",");
+    for (let ind = 0; ind < mat_A.length; ind++) {
+      let sumNum = +Number(mat_A[ind]) + +Number(mat_B[ind]);
+      sum[ind] = sumNum;
     }
+    return sum;
+  }
+
+  divideToHalf(row) {
+    let res = [];
+    for (let i = 0; i < row.length; i++) {
+      const firstPart = row[i].slice(0, row[i].length / 2);
+      const secondPart =  row[i].slice(row[i].length / 2);
+      res.push(firstPart);
+      res.push(secondPart);
+    }
+    return res;
+  }
+
+  mergeRows(row1, row2) {
+    return row1.map((val, ind) => [...val, ...row2[ind]]);
+  }
+
+  subMatrix(
+    matrix,
+    result = []
+  ) {
+    if (matrix.length==0) {
+      return result;
+    }
+    if(!Array.isArray(matrix[0][0])){
+      const createDeepArray = (arr, ind) => {
+        let copiedRow = arr[ind];
+        arr[ind] = [];
+        arr[ind].push(copiedRow)
+      }
+      createDeepArray(matrix, 0)
+      createDeepArray(matrix,1)
+    }
+    let currentRowData = matrix[0];
+    let nextRowData = matrix[1];
+    if (currentRowData.every(s => s.length == 2)) {
+      result[result.length] = this.mergeRows(currentRowData, nextRowData);
+      return this.subMatrix(matrix.slice(2), result);
+    }
+    matrix[0] = this.divideToHalf(currentRowData);
+    matrix[1] = this.divideToHalf(nextRowData);
+    return this.subMatrix(matrix, result);
+  }
+
+  addWithStats(a, b) {
+    this.addNo++;
+    return a + b;
+  }
+
+  multiplyWithStats(a, b) {
+    this.mulNo++;
+    return a * b;
+  }
 }
-
-module.exports = MxMultiplier
+module.exports = MxMultiplier;

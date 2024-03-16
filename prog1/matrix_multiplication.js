@@ -13,7 +13,7 @@ if (process.argv[2] === 'test') {
     A = mxIO.loadMx('input_mx1_4x4.json')
     B = mxIO.loadMx('input_mx2_4x4.json')
     AB = mxMultiplier.tradMultiply(A, B)
-    AB_rec = mxMultiplier.recMult(A,B)
+    AB_rec = mxMultiplier.recMultiply(A,B)
     mxIO.storeMx(AB, 'result_4x4.json')
     mxIO.storeMx(AB_rec, 'result_rec4x4.json')
 
