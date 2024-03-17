@@ -1,6 +1,7 @@
 const MxGenerator = require('./mx_generator')
 const MxIO = require('./mx_io')
 const MxMultiplier = require('./mx_multiplier')
+const MxMultiplierV2 = require('./mx_multiplier_v2')
 const MxComparator = require('./mx_comparator')
 
 if (process.argv.length < 3) {
@@ -29,21 +30,26 @@ if (process.argv[2] === 'test') {
     let mxGenerator = new MxGenerator(10)
     for (let k = kRange[0]; k <= kRange[1]; k++) {
         console.log(k)
+        let mxMultiplierV2 = new MxMultiplierV2(k)
         
         let A = mxGenerator.generateMx(k)     
         let B = mxGenerator.generateMx(k)
 
         const startTrad = Date.now();
-        AB = mxMultiplier.tradMultiply(A, B)
+        let AB = mxMultiplier.tradMultiply(A, B)
         const endTrad = Date.now();
         console.log(`Execution time - trad: ${endTrad - startTrad} ms`);
 
-        const startRec = Date.now();
-        AB_rec = mxMultiplier.recMultiply(A,B)
-        const endRec = Date.now();
-        console.log(`Execution time - rec: ${endRec - startRec} ms`);
+        const startTrad2 = Date.now();
+        let AB_trad2 = new Array(A.length)
+        for(i in A[0]) {
+            AB_trad2[i] = new Array(A.length)
+        }
+        mxMultiplierV2.tradMultiply(A,B, AB_trad2, 0, 0, A.length-1, 0, B.length-1)
+        const endTrad2 = Date.now();
+        console.log(`Execution time - trac2: ${endTrad2 - startTrad2} ms`);
 
-        console.log("multiplication is correct: " + mxComparator.compare(AB, AB_rec))
+        console.log("multiplication is correct: " + mxComparator.compare(AB, AB_trad2))
     }
 }
 
