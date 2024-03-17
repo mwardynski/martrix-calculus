@@ -29,27 +29,26 @@ if (process.argv[2] === 'test') {
 
     let mxGenerator = new MxGenerator(10)
     for (let k = kRange[0]; k <= kRange[1]; k++) {
+
         console.log(k)
-        let mxMultiplierV2 = new MxMultiplierV2(k)
-        
+
         let A = mxGenerator.generateMx(k)     
         let B = mxGenerator.generateMx(k)
+        
+        let mxMultiplierV2 = new MxMultiplierV2(k)
+        
 
         const startTrad = Date.now();
-        let AB = mxMultiplier.tradMultiply(A, B)
+        let AB_trad = mxMultiplier.tradMultiply(A, B)
         const endTrad = Date.now();
         console.log(`Execution time - trad: ${endTrad - startTrad} ms`);
 
-        const startTrad2 = Date.now();
-        let AB_trad2 = new Array(A.length)
-        for(i in A[0]) {
-            AB_trad2[i] = new Array(A.length)
-        }
-        mxMultiplierV2.tradMultiply(A,B, AB_trad2, 0, 0, A.length-1, 0, B.length-1)
-        const endTrad2 = Date.now();
-        console.log(`Execution time - trac2: ${endTrad2 - startTrad2} ms`);
+        const startRec = Date.now();     
+        let AB_rec = mxMultiplierV2.recMultiply(A,B)
+        const endRec = Date.now();
+        console.log(`Execution time - rec: ${endRec - startRec} ms`);
 
-        console.log("multiplication is correct: " + mxComparator.compare(AB, AB_trad2))
+        console.log("multiplication is correct: " + mxComparator.compare(AB_trad, AB_rec))
     }
 }
 
