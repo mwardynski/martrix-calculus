@@ -10,15 +10,14 @@ if (process.argv.length < 3) {
 
 let mxIO = new MxIO()
 let mxMultiplier = new MxMultiplier()
+let mxComparator = new MxComparator();
 if (process.argv[2] === 'test') {
     A = mxIO.loadMx('input_mx1_16x16.json')
     B = mxIO.loadMx('input_mx2_16x16.json')
     AB = mxMultiplier.tradMultiply(A, B)
     AB_rec = mxMultiplier.recMultiply(A,B)
-    mxComparator = new MxComparator();
-    same = mxComparator.compare(AB, AB_rec)
-
-    console.log("multiplication is correct: "+ same)
+    
+    console.log("multiplication is correct: " + mxComparator.compare(AB, AB_rec))
 
     mxIO.storeMx(AB, 'result_16x16.json')
     mxIO.storeMx(AB_rec, 'result_rec16x16.json')
@@ -30,11 +29,21 @@ if (process.argv[2] === 'test') {
     let mxGenerator = new MxGenerator(10)
     for (let k = kRange[0]; k <= kRange[1]; k++) {
         console.log(k)
-        let A = mxGenerator.generateMx(k)
+        
+        let A = mxGenerator.generateMx(k)     
         let B = mxGenerator.generateMx(k)
 
-        mxMultiplier.recMultiply(A, B)
-        
+        const startTrad = Date.now();
+        AB = mxMultiplier.tradMultiply(A, B)
+        const endTrad = Date.now();
+        console.log(`Execution time - trad: ${endTrad - startTrad} ms`);
+
+        const startRec = Date.now();
+        AB_rec = mxMultiplier.recMultiply(A,B)
+        const endRec = Date.now();
+        console.log(`Execution time - rec: ${endRec - startRec} ms`);
+
+        console.log("multiplication is correct: " + mxComparator.compare(AB, AB_rec))
     }
 }
 
