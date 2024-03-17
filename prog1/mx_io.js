@@ -3,11 +3,11 @@ const fs = require('fs');
 class MxIO {
 
     loadMx(fileName) {
-        return JSON.parse(fs.readFileSync('./io/'+fileName))
+        return JSON.parse(fs.readFileSync(__dirname+'/io/'+fileName))
     }
 
     storeMx(mx, fileName) {
-        fs.writeFileSync('./io/'+fileName, JSON.stringify(mx))
+        fs.writeFileSync(__dirname+'/io/'+fileName, JSON.stringify(mx))
     }
 }
  
