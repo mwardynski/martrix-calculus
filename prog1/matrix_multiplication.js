@@ -23,32 +23,34 @@ if (process.argv[2] === 'test') {
     mxIO.storeMx(AB, 'result_16x16.json')
     mxIO.storeMx(AB_rec, 'result_rec16x16.json')
 
-
+} else if (process.argv[2] === 'tradTest') {
+    let k = 10
+    let mxGenerator = new MxGenerator(10)
+    let A = mxGenerator.generateMx(k)     
+    let B = mxGenerator.generateMx(k)
+    let mxMultiplierV2 = new MxMultiplierV2(k)
+    mxMultiplierV2.tradMultiply(A, B, k)
+    printResultsForLevels(mxMultiplierV2)
 } else {
     let kRange = readKRange(process.argv)
 
     let mxGenerator = new MxGenerator(10)
     for (let k = kRange[0]; k <= kRange[1]; k++) {
-
-        console.log(k)
-
         let A = mxGenerator.generateMx(k)     
         let B = mxGenerator.generateMx(k)
-        
-        let mxMultiplierV2 = new MxMultiplierV2(k)
-        
+        for (let lSwitch = 2; lSwitch < k; lSwitch++) {
+            console.log(`l/k: ${lSwitch}/${k}`)
 
-        const startTrad = Date.now();
-        let AB_trad = mxMultiplier.tradMultiply(A, B)
-        const endTrad = Date.now();
-        console.log(`Execution time - trad: ${endTrad - startTrad} ms`);
+            let mxMultiplierV2 = new MxMultiplierV2(k)
+            mxMultiplierV2.recMultiply(A, B, lSwitch)
+            printResultsForLevels(mxMultiplierV2)
+        }
+    }
+}
 
-        const startRec = Date.now();     
-        let AB_rec = mxMultiplierV2.recMultiply(A,B)
-        const endRec = Date.now();
-        console.log(`Execution time - rec: ${endRec - startRec} ms`);
-
-        console.log("multiplication is correct: " + mxComparator.compare(AB_trad, AB_rec))
+function printResultsForLevels(multiplier) {
+    for(let l=0; l<=multiplier.addNoArray.length; l++) {
+        console.log(`${l}\t${multiplier.addNoArray[l]}\t${multiplier.mulNoArray[l]}\t${multiplier.levelTimeArray[l]}`)
     }
 }
 

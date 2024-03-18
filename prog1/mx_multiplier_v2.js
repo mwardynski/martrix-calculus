@@ -1,56 +1,62 @@
 class MxMultiplierV2 {
-  addNoArray;
-  mulNoArray;
+  addNoArray
+  mulNoArray
+  levelTimeArray
 
   constructor(k) {
     this.addNoArray = new Array(k+1)
     this.mulNoArray = new Array(k+1)
+    this.levelTimeArray = new Array(k+1)
   }
   
   tradMultiply(A, B, l) {
-    let AB = [];
+    let AB = []
     for (let i in A) {
       AB[i] = [];
       for (let j in B[0]) {
-        let sum = 0;
+        let sum = 0
         for (let k in A[0]) {
-          let r = this.multiplyWithStats(A[i][k], B[k][j], l);
-          sum = this.addWithStats(sum, r, l);
+          let r = this.multiplyWithStats(A[i][k], B[k][j], l)
+          sum = this.addWithStats(sum, r, l)
         }
-        AB[i][j] = sum;
+        AB[i][j] = sum
       }
     }
     return AB;
   }
 
-  recMultiply(A, B) {
+  recMultiply(A, B, lSwitch) {
     let l = Math.log2(A.length)
-    let AB = this.multiplyMxs(A, B, l)
+    let AB = this.multiplyMxs(A, B, l, lSwitch)
     return AB
 
   }
 
-  multiplyMxs(A, B, l) {    
-    if (l===1) {
-      return this.tradMultiply(A, B, l)
+  multiplyMxs(A, B, l, lSwitch) {
+    const startTime = Date.now()
+    let result
+    if (l===lSwitch) {
+      result = this.tradMultiply(A, B, l)
     } else {
       let qsA = this.splitToQuarters(A)
       let qsB = this.splitToQuarters(B)
 
       let resultQs = [[], []]
-      resultQs[0][0] = this.addMxs(this.multiplyMxs(qsA[0][0], qsB[0][0], l-1),
-                                  this.multiplyMxs(qsA[0][1], qsB[1][0], l-1), l)
-      resultQs[0][1] = this.addMxs(this.multiplyMxs(qsA[0][0], qsB[0][1], l-1),
-                                  this.multiplyMxs(qsA[0][1], qsB[1][1], l-1), l)
-      resultQs[1][0] = this.addMxs(this.multiplyMxs(qsA[1][0], qsB[0][0], l-1),
-                                  this.multiplyMxs(qsA[1][1], qsB[1][0], l-1), l)
-      resultQs[1][1] = this.addMxs(this.multiplyMxs(qsA[1][0], qsB[0][1], l-1),
-                                  this.multiplyMxs(qsA[1][1], qsB[1][1], l-1), l)
+      resultQs[0][0] = this.addMxs(this.multiplyMxs(qsA[0][0], qsB[0][0], l-1, lSwitch),
+                                  this.multiplyMxs(qsA[0][1], qsB[1][0], l-1, lSwitch), l,)
+      resultQs[0][1] = this.addMxs(this.multiplyMxs(qsA[0][0], qsB[0][1], l-1, lSwitch),
+                                  this.multiplyMxs(qsA[0][1], qsB[1][1], l-1, lSwitch), l)
+      resultQs[1][0] = this.addMxs(this.multiplyMxs(qsA[1][0], qsB[0][0], l-1, lSwitch),
+                                  this.multiplyMxs(qsA[1][1], qsB[1][0], l-1, lSwitch), l)
+      resultQs[1][1] = this.addMxs(this.multiplyMxs(qsA[1][0], qsB[0][1], l-1, lSwitch),
+                                  this.multiplyMxs(qsA[1][1], qsB[1][1], l-1, lSwitch), l)
       
-      let result = this.flattenQuarters(resultQs)
-      return result
+      result = this.flattenQuarters(resultQs)
+      
     }
-    
+    const endTime = Date.now()
+    this.addTimeStats(endTime-startTime, l)
+    return result
   }
 
   splitToQuarters(A) {
@@ -113,6 +119,10 @@ class MxMultiplierV2 {
   multiplyWithStats(a, b, l) {
     this.mulNoArray[l] ? this.mulNoArray[l]++ : this.mulNoArray[l]=1;
     return a * b;
+  }
+
+  addTimeStats(time, l) {
+    this.levelTimeArray[l] = this.levelTimeArray[l]+time || time;
   }
 }
   
