@@ -7,7 +7,7 @@
 Dla macierzy o rozmiarze mniejszym lub równym 2^l × 2^l algorytm tradycyjny.  
 Dla macierzy o rozmiarze większym od 2^l × 2^l algorytm rekurencyjny Binéta.
 
-Rozmiar macierzy użytej w zadaniu: 10x10
+Rozmiar macierzy użytej w zadaniu: 2^10x2^10
 
 #### 1. Pseudokod
 
@@ -66,3 +66,14 @@ Krótki opis użytych funkcji pomocniczych:
 #### 2. Wykres ilości operacji zmiennoprzecinkowych w stosuknu do poziomu rekursji dla różnych "l"
 
 ![w:700](img/flops-small.png)
+
+
+Interpretacja wyników
+
+Na wykresach została zobrazowana wydajność podziału macierzy na bloki dla użycia tradycyjnego algorytmu mnożenia macierzy
+
+Dla macierzy 2^1 x 2^1 od razu stosuje się mnożenie bez podziału na bloki, dlatego nie przechodzi do następnego poziomu rekursji
+
+W przypadku stosowania tradycyjnego mnożenia na najgłębszym poziomie rekursji, liczba operacji może być bardzo duża, co prowadzi do zwiększonego czasu przetwarzania. Jednak po zmniejszeniu poziomu rekursji aż do poziomu l = 5, zaobserwowano znaczące obniżenie wymaganych operacji i skrócenie czasu przetwarzania. Dalsze poziomy nie wykazują już tak wyraźnej redukcji operacji i czasu 
+
+Analizując podane wyniki, możemy zauważyć, że im mniejszy jest poziom rekursji, tym mniejsza jest liczba operacji, co przekłada się na mniejszy czas przetwarzania. Oznacza to, że głębokość rekursji ma istotny wpływ na wydajność algorytmu. Na wczesnych poziomach rekursji wzrost czasu przetwarzania i liczby operacji nie wpływa na działanie algorytmu, ale około od poziomu l=5 i wyżej widoczne już są znaczne zmiany
