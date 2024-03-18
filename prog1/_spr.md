@@ -16,43 +16,46 @@ https://github.com/mwardynski/martrix-calculus/tree/prog1/prog1
 #### 1. Pseudokod
 
 ```
-    tradMultiply(A, B) {
-        AB = createMatrix(A.length, A[0].length)
-        for (i in A) {
-            for (j in B[0]) {
-                sum = 0
-                for (k in A[0]) {
-                    sum += A[i][k]*B[k][j]
-                }
-                AB[i][j] = sum
+tradMultiply(A, B) {
+    AB = createMatrix(A.length, A[0].length)
+    for (i in A) {
+        for (j in B[0]) {
+            sum = 0
+            for (k in A[0]) {
+                sum += A[i][k]*B[k][j]
             }
-        }
-        return AB;
-    }
-
-    binetMultiply(A, B, l, l_switch) {
-        if(l == l_switch) {
-            return tradMultiply(A, B)
-        }
-        else {
-            qsA = splitToQuarters(A)
-            qsB = splitToQuarters(B)
-
-            resultQs = createMatrix(2, 2)
-            resultQs[0][0] = addMatrices(binetMultiply(qsA[0][0], qsB[0][0], l-1, l_switch),
-                                         binetMultiply(qsA[0][1], qsB[1][0], l-1, l_switch))
-            resultQs[0][1] = addMatrices(binetMultiply(qsA[0][0], qsB[0][1], l-1, l_switch),
-                                         binetMultiply(qsA[0][1], qsB[1][1], l-1, l_switch))
-            resultQs[1][0] = addMatrices(binetMultiply(qsA[1][0], qsB[0][0], l-1, l_switch),
-                                         binetMultiply(qsA[1][1], qsB[1][0], l-1, l_switch))
-            resultQs[1][1] = addMatrices(binetMultiply(qsA[1][0], qsB[0][1], l-1, l_switch),
-                                         binetMultiply(qsA[1][1], qsB[1][1], l-1, l_switch))
-
-
-            
-            return flattenQuarters(resultQs)
+            AB[i][j] = sum
         }
     }
+    return AB;
+}
+
+binetMultiply(A, B, l, l_switch) {
+    if(l == l_switch) {
+        return tradMultiply(A, B)
+    }
+    else {
+        qsA = splitToQuarters(A)
+        qsB = splitToQuarters(B)
+
+        resultQs = createMatrix(2, 2)
+        resultQs[0][0] = addMatrices(
+            binetMultiply(qsA[0][0], qsB[0][0], l-1, l_switch),
+            binetMultiply(qsA[0][1], qsB[1][0], l-1, l_switch))
+        resultQs[0][1] = addMatrices(
+            binetMultiply(qsA[0][0], qsB[0][1], l-1, l_switch),
+            binetMultiply(qsA[0][1], qsB[1][1], l-1, l_switch))
+        resultQs[1][0] = addMatrices(
+            binetMultiply(qsA[1][0], qsB[0][0], l-1, l_switch),
+            binetMultiply(qsA[1][1], qsB[1][0], l-1, l_switch))
+        
+        resultQs[1][1] = addMatrices(
+            binetMultiply(qsA[1][0], qsB[0][1], l-1, l_switch),
+            binetMultiply(qsA[1][1], qsB[1][1], l-1, l_switch))
+
+        return flattenQuarters(resultQs)
+    }
+}
 ```
 Krótki opis użytych funkcji pomocniczych:  
 *createMatrix* - tworzy macierz o rozmiarze zadanym w parametrach.
@@ -66,13 +69,14 @@ Krótki opis użytych funkcji pomocniczych:
 
 ![w:700](img/time-small.png)
 
+<div style="page-break-after: always;"></div>
 
 #### 3. Wykres ilości operacji zmiennoprzecinkowych w stosuknu do poziomu rekursji dla różnych "l"
 
 ![w:700](img/flops-small.png)
 
 
-Interpretacja wyników
+#### Interpretacja wyników:
 
 Na wykresach została zobrazowana wydajność mnożenia macierzy przy użyciu tradycyjnego algorytmu mnożenia i rekurencyjnego mnożenia Binet-a.
 
