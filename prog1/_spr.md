@@ -58,10 +58,10 @@ binetMultiply(A, B, l, l_switch) {
 }
 ```
 Krótki opis użytych funkcji pomocniczych:  
-*createMatrix* - tworzy macierz o rozmiarze zadanym w parametrach.
-*splitToQuarters* - dzieli podaną macierz na ćwiartki, przykładowo z jednej macierzy 4x4 powstaną cztery macierze 2x2.
-*addMatrices* - dodaje dwie macierze do siebie.
-*flattenQuarters* - operacja odwrotna do *splitToQuarters*, która traktuje podane cztery macierze jako ćwiartki i spłaszcza je do jednej macierzy, w ten sposób przykładowo z czterech ćwiartek 2x2 otrzymujemy macierz 4x4.
+*createMatrix* - tworzy macierz o rozmiarze zadanym w parametrach.  
+*splitToQuarters* - dzieli podaną macierz na ćwiartki, przykładowo z jednej macierzy 4x4 powstaną cztery macierze 2x2.  
+*addMatrices* - dodaje dwie macierze do siebie.  
+*flattenQuarters* - operacja odwrotna do *splitToQuarters*, która traktuje podane cztery macierze jako ćwiartki i spłaszcza je do jednej macierzy, przykład: z czterech ćwiartek 2x2 otrzymujemy macierz 4x4.
 
 
 
