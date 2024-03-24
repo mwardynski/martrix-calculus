@@ -11,7 +11,7 @@ let b = mxGenerator.generateV(mxSize)
 
 let luDecomposer = new LuDecomposer()
 
-const { L, U } = luDecomposer.decompose(A)
+const { L, U } = luDecomposer.decompose(A, b)
 
 console.log("L matrix:");
 console.log(L);

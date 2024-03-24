@@ -15,8 +15,8 @@ class MxGenerator {
   
   generateV(vSize) {
     let v = [];
-    for (let i = 0 ; i < mxSize; i++) {
-      mx[vSize] = Math.random() * 2 * this.numRange - this.numRange
+    for (let i = 0 ; i < vSize; i++) {
+      v[i] = Math.random() * 2 * this.numRange - this.numRange
     }
     return v
   }

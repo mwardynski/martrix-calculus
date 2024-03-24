@@ -1,6 +1,6 @@
 class LuDecomposer {
 
-    decompose(A) {
+    decompose(A, b) {
         const n = A.length;
         const L = [];
         const U = A;
@@ -20,6 +20,7 @@ class LuDecomposer {
                 for (let j = 0; j < n; j++) {
                     U[row][j] = U[row][j] - multiplier * U[i][j]
                 }
+                b[row] = b[row] - multiplier * b[i]
             }
         }
 
