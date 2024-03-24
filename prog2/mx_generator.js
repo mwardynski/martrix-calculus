@@ -7,7 +7,7 @@ class MxGenerator {
     for (let i = 0 ; i < mxSize; i++) {
       mx[i] = [];
       for (let j = 0; j < mxSize; j++) {
-        mx[i][j] = Math.random() * 2 * this.numRange - this.numRange
+        mx[i][j] = Math.floor(Math.random() * 2 * this.numRange - this.numRange)
       }
     }
     return mx
