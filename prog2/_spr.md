@@ -75,7 +75,9 @@ solveEquation - postępowanie odwrotne Gaussa
 #### 1.2. Kod programu
 https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 1.3. Wyniki i ich analiza
+
 Czas wykonania: 0.5860999999999876 ms
+
 Wynik norm: 7.034157316721072e-11
 
 Eliminacja Gaussa tworząca jedynki po przekątnej
