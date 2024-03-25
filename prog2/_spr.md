@@ -18,12 +18,29 @@ https://github.com/mwardynski/martrix-calculus/tree/prog2/prog2
 
 #### 1.1. Pseudokod programu
 ```
-pseudokod
+GaussianElimination(){
+
+for (i = 0; i<matrix.length;i++){
+    scale = 1 /matrix[i][i];
+    for (j = i; j < matrix.length; j++){
+        matrix[i][j] = matrix[i][j] * scale;
+            }
+    vector[i] = vector[i]*scale;
+    if |matrix[i][i]-1| < Epsilon{
+        matrix[i][i] = 1;
+            }
+    gaussianEliminationStep(i)
+    }
+result = solveEquation()
+return result
+}
 ```
+Funkcje pomocnicze:
+gaussianEliminationStep - służy do modyfikacji kolumn
+solveEquation - postępowanie odwrotne Gaussa
 
 #### 1.2. Kod programu
-
-
+https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 1.3. Wyniki i ich analiza
 
 
@@ -33,12 +50,30 @@ pseudokod
 
 #### 2.1. Pseudokod programu
 ```
-pseudokod
+gaussianEliminationWithPivoting(){
+
+for (colIndex = 0; colIndex < matrix.length; colIndex++){
+    maxRowIndex = findMaxAbsColIndex(colIndex);
+    if |matrix[maxRowIndex][colIndex]| !==0{
+        swapRows(colIndex,maxColIndex)
+        gaussianEliminationStep(colIndex);
+    }
+    else{
+    return null;
+    }
+}
+result = solveEquation();
+return result
+}
 ```
+Funkcje pomocnicze:
+findMaxAbsColIndex - poszukiwanie elementu maksymalnego co do wartości bezwzględnej
+swapRows - zamiana wierszy miejscami
+gaussianEliminationStep - służy do modyfikacji kolumn, ponieważ po zamianie wartości kolumn wykonuje się krok eliminacji Gaussa
+solveEquation - postępowanie odwrotne Gaussa
 
 #### 2.2. Kod programu
-
-
+https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 2.3. Wyniki i ich analiza
 
 
