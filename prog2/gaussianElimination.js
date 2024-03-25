@@ -23,15 +23,20 @@ class GaussianElimination {
         return this.solveEquation();
     }
 
-    solveEquation() {
+   solveEquation() {
         const n = this.matrix.length;
         const solution = new Array(n).fill(0);
+    
         for (let i = n - 1; i >= 0; i--) {
             solution[i] = this.vector[i];
+    
             for (let j = i + 1; j < n; j++) {
                 solution[i] -= this.matrix[i][j] * solution[j];
             }
+    
+            solution[i] /= this.matrix[i][i];
         }
+    
         return solution;
     }
 
