@@ -11,7 +11,8 @@ Suma dnia i miesiąca dla każdego z nas:
 
 Ponieważ rozmiar macierzy 5 wydał się nam bardzo mały, przygotowaliśmy sprawozdanie dla różnicy liczb wyliczonej dla każdego z nas, czyli: 27 - 5 = 22
 
-#### Użyta w zadaniach macierz a:
+#### Użyta w zadaniach macierz *A*:
+Dla przejrzystości zamieszczanych rezultatów, na potrzeby sprawozdania zmniejszamy precyzję użytych liczb do dwóch miejsc po przecinku. Chcemy jednak zwrócić uwagę, że obliczenia dokonane zostały na liczbach o maksymalnej precyzji, a jej zmniejszenie nastąpiło już po wszystich wyliczenia podczas listowania rezultatów w konsoli.
 <pre class="hljs"><code><div style="font-size: 0.4em;">
 -3.59,  -2.30,  -4.12,  -4.61,  -3.59,  -4.74,  -2.65,  -4.96,  1.94,   -4.57,  -0.70,  1.05,   3.29,   1.28,   0.46,   -3.86,  -0.17,  -2.89,  1.89,   -2.08,  3.11,   2.57,
 0.81,   4.40,   -4.49,  -0.29,  -0.51,  3.52,   2.97,   2.56,   -0.29,  -0.40,  -3.80,  3.64,   3.49,   -4.53,  -3.00,  4.89,   4.89,   -4.35,  2.32,   2.08,   -0.75,  1.22,
@@ -318,8 +319,7 @@ P:
 0,      0,      0,      0,      0,      0,      0,      1,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,
 </div></code></pre>
 
-Wywołanie funkcji w Matlabie zwraca takie same wyniki, a jedyna różnica bieże się z błędu zaokrąglenia operacji zmiennoprzecinkowych. Arytmetyka zmiennoprzecinkowa przy takiej ilości zróżnicowanych operacji jest ciężka do uniknięcia i nawet zaczynając od macierzy *A* wypełnionej wyłącznie wartościami całkowitymi, na pewną ilość operacji zmiennoprzecinkowych i tak się natkniemy.  
-Jednakże można zauważyć, że dominująca ilość wartości całkowitych w macierzy *A* pozytywnie wpływa na różnicę pomiędzy wynikami naszej implementacji a Matlabem. Z tego wniosek, że możemy pokusić się o prosty trick i wymnożyć wszystkie kolumny macierzy *A*, oraz wektor wyrazów wolnych *b*, przez wartość wystarczająco dużą, aby pozbyć się liczb po przecinku. To podejście, choć trywialne, może przynieść dla niektórych przypadków dobre rezultaty, jednakże jest to broń obusieczna, gdyż z problemu niedokładności obliczeń zmiennoprzecinkowych, łatwo możemy wpaść w jeszcze gorszy problem, a mianowicie: przekroczenie zakresu liczb całkowitych.  
+Wywołanie funkcji w Matlabie zwraca takie same wyniki, a jedyna różnica bieże się z błędu zaokrąglenia operacji zmiennoprzecinkowych.
   
 Poniżej wyniki uzyskane z Matlaba, a właściwie z Octave:  
 L:
@@ -397,3 +397,7 @@ P:
    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0
    0   0   0   0   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0
 </div></code></pre>
+
+### 5. Wnioski
+Przyglądając się wynikom, można dopatrzyć się małych rozbieżności pomiędzy wartościami z naszej implementacji oraz Matlabem. Są one spowodowane ograniczoną dokładnością obliczeń zmiennoprzecinkowych. Arytmetyka zmiennoprzecinkowa przy takiej ilości zróżnicowanych operacji jest ciężka do uniknięcia i nawet zaczynając od macierzy *A* wypełnionej wyłącznie wartościami całkowitymi, na pewną ilość operacji zmiennoprzecinkowych i tak się natkniemy.  
+Jednakże można zauważyć, że dominująca ilość wartości całkowitych w macierzy *A* pozytywnie wpływa na różnicę pomiędzy wynikami naszej implementacji a Matlabem. Z tego wniosek, że możemy pokusić się o prosty trick i wymnożyć wszystkie kolumny macierzy *A*, oraz wektor wyrazów wolnych *b*, przez wartość wystarczająco dużą, aby pozbyć się liczb po przecinku. To podejście, choć trywialne, może przynieść dla niektórych przypadków dobre rezultaty, jednakże jest to broń obusieczna, gdyż z problemu niedokładności obliczeń zmiennoprzecinkowych, łatwo możemy wpaść w jeszcze gorszy problem, a mianowicie: przekroczenie zakresu liczb całkowitych.  
