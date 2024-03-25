@@ -76,6 +76,7 @@ solveEquation - postępowanie odwrotne Gaussa
 #### 1.2. Kod programu
 https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 1.3. Wyniki i ich analiza
+Wynik norm: 7.034157316721072e-11
 
 Eliminacja Gaussa tworząca jedynki po przekątnej
 <pre class="hljs"><code><div style="font-size: 0.4em;">
@@ -135,7 +136,7 @@ solveEquation - postępowanie odwrotne Gaussa
 #### 2.2. Kod programu
 https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 2.3. Wyniki i ich analiza
-
+Wynik norm: 3.177124443021102e-11
 
 ### 3. LU faktoryzacja
 
