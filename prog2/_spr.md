@@ -67,7 +67,9 @@ return result
 }
 ```
 Funkcje pomocnicze:
+
 gaussianEliminationStep - służy do modyfikacji kolumn
+
 solveEquation - postępowanie odwrotne Gaussa
 
 #### 1.2. Kod programu
