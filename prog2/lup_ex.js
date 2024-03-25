@@ -1,22 +1,20 @@
-const MxGenerator = require('./mx_generator')
+const matrix22x22 = require('./data/matrix22x22.json')
+const MxIO = require('./mx_io')
 const LupDecomposer = require('./lup')
 
-const mxSize = 22
+const A = matrix22x22
 
-let mxGenerator = new MxGenerator(10)
-let A = mxGenerator.generateMx(mxSize)
+let mxIo = new MxIO()
 
 console.log("A matrix:")
-console.log(A)
+mxIo.printMx(A, 2)
 
 let lupDecomposer = new LupDecomposer()
-
 const { L, U, P } = lupDecomposer.decompose(A)
 
-
 console.log("L matrix:")
-console.log(L)
+mxIo.printMx(L, 2)
 console.log("U matrix:")
-console.log(U)
+mxIo.printMx(U, 2)
 console.log("P matrix:")
-console.log(P)
+mxIo.printMx(P, 0)
