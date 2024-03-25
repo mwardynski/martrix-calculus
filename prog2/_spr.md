@@ -139,6 +139,21 @@ swapRows - zamiana wierszy miejscami
 gaussianEliminationStep - służy do modyfikacji kolumn, ponieważ po zamianie wartości kolumn wykonuje się krok eliminacji Gaussa
 solveEquation - postępowanie odwrotne Gaussa
 
+Funckja gaussianEliminationStep jest częścią algorytmu eliminacji Gaussa
+```
+gaussianEliminationStep(colIndex){
+
+for (rowIndex = colIndex+1; rowIndex < matrix.length; rowIndex++){
+    factor = matrix[rowIndex][ColIndex]/matrixcolIndex][colIndex];
+
+    for ( j = colIndex; j < n; j++) {
+    matrix[rowIndex][j] -= factor * matrix[colIndex][j];
+        }
+vector[rowIndex] -= factor * vector[colIndex];
+    }
+}
+```
+
 #### 2.2. Kod programu
 https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 2.3. Wyniki i ich analiza
