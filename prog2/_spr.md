@@ -241,7 +241,7 @@ https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/lup.js
 
 
 #### 4.3. Wyniki i ich analiza
-Po wywołaniu funkcji `lu_decompose(A, b)`, otrzymamy następujące macierze:  
+Po wywołaniu funkcji `lup_decompose(A)`, otrzymamy następujące macierze:  
 L:  
 <pre class="hljs"><code><div style="font-size: 0.4em;">
 1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,
@@ -318,7 +318,9 @@ P:
 0,      0,      0,      0,      0,      0,      0,      1,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,      0,
 </div></code></pre>
 
-Wywołanie funkcji w Matlabie zwraca takie same wyniki, a jedyna różnica bieże się z błędu zaokrąglenia operacji zmiennoprzecinkowych.  
+Wywołanie funkcji w Matlabie zwraca takie same wyniki, a jedyna różnica bieże się z błędu zaokrąglenia operacji zmiennoprzecinkowych. Arytmetyka zmiennoprzecinkowa przy takiej ilości zróżnicowanych operacji jest ciężka do uniknięcia i nawet zaczynając od macierzy *A* wypełnionej wyłącznie wartościami całkowitymi, na pewną ilość operacji zmiennoprzecinkowych i tak się natkniemy.  
+Jednakże można zauważyć, że dominująca ilość wartości całkowitych w macierzy *A* pozytywnie wpływa na różnicę pomiędzy wynikami naszej implementacji a Matlabem. Z tego wniosek, że możemy pokusić się o prosty trick i wymnożyć wszystkie kolumny macierzy *A*, oraz wektor wyrazów wolnych *b*, przez wartość wystarczająco dużą, aby pozbyć się liczb po przecinku. To podejście, choć trywialne, może przynieść dla niektórych przypadków dobre rezultaty, jednakże jest to broń obusieczna, gdyż z problemu niedokładności obliczeń zmiennoprzecinkowych, łatwo możemy wpaść w jeszcze gorszy problem, a mianowicie: przekroczenie zakresu liczb całkowitych.  
+  
 Poniżej wyniki uzyskane z Matlaba, a właściwie z Octave:  
 L:
 <pre class="hljs"><code><div style="font-size: 0.3em;">
