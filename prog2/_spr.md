@@ -70,13 +70,17 @@ return result
 }
 ```
 Funkcje pomocnicze:
+
 gaussianEliminationStep - służy do modyfikacji kolumn
+
 solveEquation - postępowanie odwrotne Gaussa
 
 #### 1.2. Kod programu
 https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 1.3. Wyniki i ich analiza
+
 Czas wykonania: 0.5860999999999876 ms
+
 Wynik norm: 7.034157316721072e-11
 
 Eliminacja Gaussa tworząca jedynki po przekątnej
@@ -134,9 +138,13 @@ return result
 }
 ```
 Funkcje pomocnicze:
+
 findMaxAbsColIndex - poszukiwanie elementu maksymalnego co do wartości bezwzględnej
+
 swapRows - zamiana wierszy miejscami
+
 gaussianEliminationStep - służy do modyfikacji kolumn, ponieważ po zamianie wartości kolumn wykonuje się krok eliminacji Gaussa
+
 solveEquation - postępowanie odwrotne Gaussa
 
 Funckja gaussianEliminationStep jest częścią algorytmu eliminacji Gaussa
@@ -157,9 +165,13 @@ vector[rowIndex] -= factor * vector[colIndex];
 #### 2.2. Kod programu
 https://github.com/mwardynski/martrix-calculus/blob/prog2/prog2/gaussianElimination.js
 #### 2.3. Wyniki i ich analiza
+
 Czas wykonania 0.5423999999999296 ms
+
 Wynik norm: 3.177124443021102e-11
+
 Macierz po pivotingu i krokach eliminacji Gaussa
+
 <pre class="hljs"><code><div style="font-size: 0.4em;">
 -4.90,  -2.86,  2.31,   4.27,   -3.48,  -3.94,  0.05,   2.22,   2.09,   3.45,   -0.98,  -2.21,  3.94,   -3.94,  4.21,   2.03, 1.85,                                              3.86,    -3.88,  2.23,   1.19,   3.13,
 0.00,   6.65,   1.24,   -0.61,  5.35,   2.98,   4.38,   -0.53,  -1.30,  -1.69,  -1.40,  -0.18,  -6.38,  5.21,   -7.59,  -5.74,                                                   -5.25,   -4.57,  0.48,   2.25,   -5.20,  -4.36,
@@ -192,79 +204,30 @@ Wektor
 
 
 Wyniki z matlab(dla zwykłej eliminacji Gaussa i eliminacji Gaussa z pivotingiem została wykorzystana taka sama macierz)
+
 <pre class="hljs"><code><div style="font-size: 0.4em;">
-1.0000         0         0         0         0         0         0         0         0
-         0    1.0000         0         0         0         0         0         0         0
-         0         0    1.0000         0         0         0         0         0         0
-         0         0         0    1.0000         0         0         0         0         0
-         0         0         0         0    1.0000         0         0         0         0
-         0         0         0         0         0    1.0000         0         0         0
-         0         0         0         0         0         0    1.0000         0         0
-         0         0         0         0         0         0         0    1.0000         0
-         0         0         0         0         0         0         0         0    1.0000
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-
-  Columns 10 through 18
-
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-    1.0000         0         0         0         0         0         0         0         0
-         0    1.0000         0         0         0         0         0         0         0
-         0         0    1.0000         0         0         0         0         0         0
-         0         0         0    1.0000         0         0         0         0         0
-         0         0         0         0    1.0000         0         0         0         0
-         0         0         0         0         0    1.0000         0         0         0
-         0         0         0         0         0         0    1.0000         0         0
-         0         0         0         0         0         0         0    1.0000         0
-         0         0         0         0         0         0         0         0    1.0000
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-         0         0         0         0         0         0         0         0         0
-
-  Columns 19 through 23
-
-         0         0         0         0   61.2375
-         0         0         0         0   43.6278
-         0         0         0         0   48.6434
-         0         0         0         0   60.3056
-         0         0         0         0  -43.4204
-         0         0         0         0  -64.4211
-         0         0         0         0    9.6630
-         0         0         0         0   46.9962
-         0         0         0         0   90.0302
-         0         0         0         0  103.0871
-         0         0         0         0  -51.6678
-         0         0         0         0   89.2561
-         0         0         0         0    5.8722
-         0         0         0         0  -15.2275
-         0         0         0         0    6.6994
-         0         0         0         0 -127.3849
-         0         0         0         0   63.2447
-         0         0         0         0  -19.5860
-    1.0000         0         0         0   58.0483
-         0    1.0000         0         0 -134.1442
-         0         0    1.0000         0    9.0815
-         0         0         0    1.0000  -75.1890
+1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	61.2375188621024
+0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	43.6278425902261
+0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	48.6433673808522
+0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	60.3055868614857
+0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	-43.4203874044435
+0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	-64.4211033061605
+0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	9.66297879002396
+0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	46.9961725462089
+0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	90.0302323619775
+0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	103.087075377874
+0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	-51.6678094192899
+0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	89.2560797318607
+0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	5.87217635919770
+0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	-15.2275394660378
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	6.69937510521108
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	-127.384851929085
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	63.2446911255303
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	-19.5859660376402
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	58.0482736553483
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	-134.144237484265
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	9.08151089947283
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	-75.1890112897208
     </div></code></pre>  
 
 
