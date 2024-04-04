@@ -3,8 +3,11 @@ class GaussianElimination {
         this.matrix = matrix;
         this.vector = vector;
     }
+            
 
     gaussianElimination() {
+        const MxIO = require('./mx_io')
+        let mxIO = new MxIO()
         const n = this.matrix.length;
 
         for (let i = 0; i < n; i++) {
@@ -20,6 +23,11 @@ class GaussianElimination {
             this.gaussianEliminationStep(i);
             
         }
+        console.log("Matrix after Gaussian elimination")
+        mxIO.printMx(this.matrix,2)
+
+        console.log("Vector after Gaussian elimination")
+        mxIO.printV(this.vector,2)
         return this.solveEquation();
     }
 
@@ -67,6 +75,8 @@ class GaussianElimination {
     }
 
     gaussianEliminationWithPivoting() {
+        const MxIO = require('./mx_io')
+        let mxIO = new MxIO()
         const n = this.matrix.length;
         for (let colIndex = 0; colIndex < n; colIndex++) {
             let maxRowIndex = this.findMaxAbsRowIndex(colIndex);
@@ -77,7 +87,11 @@ class GaussianElimination {
                 return null;
             }
         }
+        console.log("Matrix after Gaussian elimination with pivoting")
+        mxIO.printMx(this.matrix,2)
 
+        console.log("Vector after Gaussian elimination with pivoting")
+        mxIO.printV(this.vector,2)
         return this.solveEquation();
     }
 
