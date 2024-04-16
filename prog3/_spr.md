@@ -120,3 +120,100 @@ Przedstawiamy poniżej współczynniki uwarunkowania dla macierzy M i wszystkich
 - cond<sub>1</sub>||M|| = ||M||<sub>1</sub> ||M<sup>-1</sup>||<sub>1</sub> = 528
 - cond<sub>2</sub>||M|| = ||M||<sub>2</sub> ||M<sup>-1</sup>||<sub>2</sub> = 99.9305
 - cond<sub>3</sub>||M|| = ||M||<sub>3</sub> ||M<sup>-1</sup>||<sub>3</sub> = 435.25437
+
+
+### SVD
+
+#### Macierz wejściowa:
+
+    M = [[4 9 2]
+        [3 5 7]
+        [8 1 6]]
+
+#### Wyniki:
+
+    U =
+    [[-0.5773502691896256, -0.7071067811865477, -0.40824829046386363], [-0.5773502691896257, 1.281975124255709e-16, 0.8164965809277264], [-0.5773502691896258, 0.7071067811865474, -0.40824829046386174]]
+
+    S =
+    [[15.000000000000004, 0, 0]
+     [0, 6.9282032302755105, 0]
+     [0, 0, 3.4641016151377557]]
+
+    V =
+    [[-0.57735027  0.40824829 -0.70710678]
+    [-0.57735027 -0.81649658 -0.        ]
+    [-0.57735027  0.40824829  0.70710678]]
+
+
+Wyniki zostałe porównane z matlab
+
+Użyta komenda: [U,S,V] = svd(M)
+
+#### Wyniki matlab:
+
+    U =
+
+    -0.5774   -0.7071   -0.4082
+    -0.5774    0.0000    0.8165
+     -0.5774    0.7071   -0.4082
+
+    S =
+
+     15.0000         0         0
+          0    6.9282         0
+           0         0    3.4641
+
+    V =
+
+      -0.5774    0.4082   -0.7071
+       -0.5774   -0.8165    0.0000
+       -0.5774    0.4082    0.7071
+
+
+Różnica wyników naszego programu i wyników matlab jest minimalna i wynika z powodu różnicy w dokładności operacji zmiennoprzecinkowych
+Oryginalna wartość U[2][2] = 6.092348847630547e-15, czyli widzimy zastosowanie zaokrąglenia
+
+#### Kod źródłowy:
+
+```py
+def result(matrix):
+    T = transpose(matrix)
+    AT = multiply(matrix, T)
+    TA = multiply(T, matrix)
+    main_matrix = AT if matrix_rank(TA) > matrix_rank(AT) else TA
+    np.set_printoptions(suppress=True)
+    eigenvalues, eigenvectors = np.linalg.eig(main_matrix)
+
+    sorted_indices = sorted(range(len(eigenvalues)), key=lambda i: eigenvalues[i], reverse=True)
+    eigenvalues = eigenvalues[sorted_indices]
+    eigenvectors = eigenvectors[:, sorted_indices]
+
+    root = roots(eigenvalues)
+
+    E = diag(root)
+
+    r = count_nonzero(eigenvalues)
+    U = zeros_like(matrix)
+    for i in range(r):
+        u = dot(matrix, eigenvectors[:, i])
+        norm_u = norm(u)
+        if norm_u != 0:
+            U[i] = [x / norm_u for x in u]
+
+    U  = transpose(U)
+
+
+    return U, E, eigenvectors
+```
+Macierz podstawowa, na podstawie której zostanią obliczone wartości własne i wektory jest wybierana na podstawie rang macierzy TA i AT. Matryca z największym rangiem zostanie wybrana
+
+Do obliczenia wartości i wektory własne są obliczane za pomocą funkcji linalg.eig z biblioteki numpy
+
+W celu utworzenia macierzy diagonalnej E zostały obliczone pierwiastki własności własnych
+
+
+
+
+
+
