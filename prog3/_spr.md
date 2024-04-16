@@ -76,13 +76,10 @@ def vector_p_norm(x, p):
 
 def calculate_p_norm(A, p):
     x_init = np.ones(5)
-    
-    result = minimize(lambda x, A, p: -vector_p_norm(A @ x, p), x_init, args=(A, p),
-                    constraints={'type': 'eq', 'fun': lambda x: vector_p_norm(x, p) - 1})
+    result = minimize(lambda x, A, p: -vector_p_norm(A @ x, p), x_init, args=(A, p), constraints={'type': 'eq', 'fun': lambda x: vector_p_norm(x, p) - 1})
 
     x_optimal = result.x
     p_norm = vector_p_norm(A @ x_optimal, p)
-
     return p_norm
 ```
 
@@ -120,7 +117,7 @@ Przedstawiamy poniżej współczynniki uwarunkowania dla macierzy M i wszystkich
 - cond<sub>1</sub>||M|| = ||M||<sub>1</sub> ||M<sup>-1</sup>||<sub>1</sub> = 528
 - cond<sub>2</sub>||M|| = ||M||<sub>2</sub> ||M<sup>-1</sup>||<sub>2</sub> = 99.9305
 - cond<sub>3</sub>||M|| = ||M||<sub>3</sub> ||M<sup>-1</sup>||<sub>3</sub> = 435.25437
-
+<div style="page-break-after: always;"></div>
 
 ### SVD
 
@@ -147,25 +144,21 @@ Przedstawiamy poniżej współczynniki uwarunkowania dla macierzy M i wszystkich
 
 
 Wyniki zostałe porównane z matlab
-
 Użyta komenda: [U,S,V] = svd(M)
 
 #### Wyniki matlab:
 
     U =
-
     -0.5774   -0.7071   -0.4082
     -0.5774    0.0000    0.8165
      -0.5774    0.7071   -0.4082
 
     S =
-
      15.0000         0         0
           0    6.9282         0
            0         0    3.4641
 
     V =
-
       -0.5774    0.4082   -0.7071
        -0.5774   -0.8165    0.0000
        -0.5774    0.4082    0.7071
